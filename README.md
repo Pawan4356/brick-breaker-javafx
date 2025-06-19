@@ -51,6 +51,8 @@ brick-breaker-javafx/
 
 ### ▶️ Run using Maven
 
+Now go to your project root (demomavinfx) and run:
+
 ```bash
-mvn javafx:run
+mvn clean javafx:run
 ```
