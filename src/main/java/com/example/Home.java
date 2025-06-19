@@ -23,16 +23,16 @@ public class Home extends Application {
         StackPane root = new StackPane();
         Scene scene = new Scene(root);
 
-        primaryStage.getIcons().add(new Image("file:D:\\Pawan\\Brick Breaker\\demomavinfx\\src\\main\\resources\\icon.png"));
+        primaryStage.getIcons().add(new Image(getClass().getResource("/Icon.png").toExternalForm()));
 
         // Load and set the background image
-        Image bg = new Image("file:D:\\Pawan\\Brick Breaker\\demomavinfx\\src\\main\\resources\\Background.jpg");
+        Image bg = new Image(getClass().getResource("/Background.jpg").toExternalForm());
         ImageView bgv = new ImageView(bg);
         bgv.setFitWidth(800);  // Match the canvas width
         bgv.setFitHeight(600); // Match the canvas height
 
         // Load the top image
-        Image topImage = new Image("file:D:\\Pawan\\Brick Breaker\\demomavinfx\\src\\main\\resources\\Heading.png");
+        Image topImage = new Image(getClass().getResource("/Heading.png").toExternalForm());
         ImageView topImageView = new ImageView(topImage);
         topImageView.setFitWidth(200);
         topImageView.setPreserveRatio(true);

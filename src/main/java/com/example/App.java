@@ -53,16 +53,12 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        // Prompt for difficulty
-        difficulty = selectDifficulty();
-
-        if (difficulty == null) {
-            Platform.exit();
-            return;
+        Home homeScreen = new Home();
+        try {
+            homeScreen.start(primaryStage);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        // Call a separate method to set up the game
-        setupGame(primaryStage);
     }
 
     public void setupGame(Stage primaryStage) {
@@ -73,12 +69,12 @@ public class App extends Application {
         Scene scene = new Scene(root);
 
         // Set up background and top image
-        Image bg = new Image("file:D:\\Pawan\\Brick Breaker\\demomavinfx\\src\\main\\resources\\Background.jpg");
+        Image bg = new Image(getClass().getResource("/Background.jpg").toExternalForm());
         ImageView bgv = new ImageView(bg);
         bgv.setFitWidth(800);
         bgv.setFitHeight(600);
 
-        Image topImage = new Image("file:D:\\Pawan\\Brick Breaker\\demomavinfx\\src\\main\\resources\\Heading.png");
+        Image topImage = new Image(getClass().getResource("/Heading.png").toExternalForm());
         ImageView topImageView = new ImageView(topImage);
         topImageView.setFitWidth(200);
         topImageView.setPreserveRatio(true);
@@ -161,7 +157,9 @@ public class App extends Application {
         alert.getButtonTypes().setAll(ButtonType.CANCEL, new ButtonType("Easy"), new ButtonType("Medium"), new ButtonType("Hard"));
 
         ButtonType result = alert.showAndWait().orElse(ButtonType.CANCEL);
-        if (result == ButtonType.CANCEL) return null;
+        if (result == ButtonType.CANCEL) {
+            return null;
+        }
 
         switch (result.getText()) {
             case "Easy":
@@ -171,17 +169,17 @@ public class App extends Application {
             case "Hard":
                 return Difficulty.HARD;
             default:
-                return null;        
+                return null;
         }
     }
 
     private void initializeGame() {
         paddle = new Paddle(350, 550, difficulty.paddleWidth, 5, 800);
         ball = new Ball(paddle.getX() + paddle.getWidth() / 2 - 10, paddle.getY() - 20, 10);
-    
+
         bricks = new ArrayList<>();
         List<int[]> unbreakablePositions = new ArrayList<>();
-    
+
         // Define unbreakable brick positions based on difficulty
         switch (difficulty) {
             case EASY:
@@ -207,12 +205,12 @@ public class App extends Application {
                 unbreakablePositions.add(new int[]{3, 6});
                 break;
         }
-    
+
         // Add bricks to the grid, with unbreakable bricks in specified positions
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 10; j++) {
                 Brick.BrickType type;
-    
+
                 // Check if the current position is an unbreakable brick position
                 if (isUnbreakablePosition(i, j, unbreakablePositions)) {
                     type = Brick.BrickType.UNBREAKABLE;
@@ -220,11 +218,11 @@ public class App extends Application {
                     // Randomly assign other types of bricks (e.g., strong or regular)
                     type = determineBrickType();
                 }
-    
+
                 bricks.add(new Brick(80 * j + 5, 30 * i + 50, 70, 20, type));
             }
         }
-    
+
         gameOver = false;
         ballLaunched = false;
     }
@@ -237,12 +235,12 @@ public class App extends Application {
         }
         return false;
     }
-    
+
     // Helper method to assign random brick types for other bricks
     private Brick.BrickType determineBrickType() {
         Random random = new Random();
         int randomType = random.nextInt(3);
-    
+
         switch (randomType) {
             case 1:
                 return Brick.BrickType.STRONG;
@@ -257,16 +255,16 @@ public class App extends Application {
             public void handle(long now) {
                 if (!gameOver) {
                     gc.clearRect(0, 0, 800, 600);
-    
+
                     if (!ballLaunched) {
                         // Ensure the ball is positioned correctly above the paddle
                         ball.setPosition(paddle.getX() + paddle.getWidth() / 2 - ball.getRadius(), paddle.getY() - ball.getRadius() * 2);
                     } else {
                         ball.update(); // Update the ball position if launched
                     }
-    
+
                     ball.draw(gc);
-    
+
                     if (moveLeft) {
                         paddle.moveLeft();
                     }
@@ -274,7 +272,7 @@ public class App extends Application {
                         paddle.moveRight();
                     }
                     paddle.draw(gc);
-    
+
                     // Check for collisions with bricks
                     for (Brick brick : bricks) {
                         if (!brick.isBroken() && brick.checkCollision(ball)) {
@@ -283,14 +281,14 @@ public class App extends Application {
                         }
                         brick.draw(gc);
                     }
-    
+
                     // Paddle collision
-                    if (ball.getY() + ball.getRadius() * 2 >= paddle.getY() &&
-                        ball.getX() + ball.getRadius() >= paddle.getX() &&
-                        ball.getX() <= paddle.getX() + paddle.getWidth()) {
+                    if (ball.getY() + ball.getRadius() * 2 >= paddle.getY()
+                            && ball.getX() + ball.getRadius() >= paddle.getX()
+                            && ball.getX() <= paddle.getX() + paddle.getWidth()) {
                         ball.setDy(ball.getDy() * -1);
                     }
-    
+
                     // Game over conditions
                     if (ball.getY() >= 600) {
                         gameOver = true;
@@ -302,7 +300,6 @@ public class App extends Application {
         };
         gameLoop.start();
     }
-    
 
     private void restartGame(GraphicsContext gc) {
         gameOver = false;
@@ -311,7 +308,6 @@ public class App extends Application {
         initializeGame();
         startGameLoop(gc); // Restart the game loop
     }
-    
 
     public void showGameOverAlert() {
         Alert alert = new Alert(AlertType.INFORMATION);
