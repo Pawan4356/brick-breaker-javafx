@@ -14,17 +14,13 @@ Smash all the bricks with the ball while controlling the paddle!
 
 ## 🌄 Overview
 
-### Home Page
-<img src="https://drive.google.com/uc?export=view&id=16OegJpR5py66BSVAfAgEQCduKn9F62gi" width="400">
+| Home Page | Easy Level |
+|-----------|------------|
+| ![](assets/Home.png) | ![](assets/Easy.png) |
 
-### Easy Level
-<img src="https://drive.google.com/file/d/1zQPqCnXzsAuTTPW44p1WtD1D9kUvj3MV/view" width="400">
-
-### Medium Level
-<img src="https://drive.google.com/uc?export=view&id=1u2mnGyngg4Q_dKnixR5xL14mWzuDSRt5" width="400">
-
-### Hard Level
-<img src="https://drive.google.com/uc?export=view&id=1zQPqCnXzsAuTTPW44p1WtD1D9kUvj3MV" width="400">
+| Medium Level | Hard Level |
+|--------------|------------|
+| ![](assets/Medium.png) | ![](assets/Hard.png) |
 
 ## 🛠 Tech Stack
 
