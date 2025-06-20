@@ -3,6 +3,7 @@
 A classic Brick Breaker (Breakout-style) desktop game built using JavaFX.  
 Smash all the bricks with the ball while controlling the paddle!
 
+![](BrickBreaker.gif)
 
 ## 🎮 Features
 
